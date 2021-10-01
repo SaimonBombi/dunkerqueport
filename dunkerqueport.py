@@ -38,7 +38,7 @@ class dunkerqueportSpider(scrapy.Spider):
                     "name" : row.css("td:nth-child(2)::text").get(),
                     "date" : row.css("td:nth-child(1)::text").get(),
                     "post" : row.css("td:nth-child(6)::text").get(),
-                    "comingfrom" : row.css("td:nth-child(5)::text").get(),
+                    "origin" : row.css("td:nth-child(5)::text").get(),
                     "destination" : row.css("td:nth-child(7)::text").get()
                     }
 
@@ -62,7 +62,7 @@ try:
     dunkerqueporthistoric = pd.read_csv("dunkerqueporthistoric.csv")
 except:
     print("dunkerqueporthistoric.csv coudn't be found, continuing with fresh start")
-    dunkerqueporthistoric = pd.DataFrame(columns=['name', 'post', 'date', 'comingfrom', "destination"])
+    dunkerqueporthistoric = pd.DataFrame(columns=['name', 'post', 'date', 'origin', "destination"])
 
 newdatadict = newdata.to_dict()
 
@@ -83,7 +83,7 @@ for i in newdatadict["name"]:
             "name": newdatadict["name"][i],
             "date": newdatadict["date"][i],
             "post": newdatadict["post"][i],
-            "comingfrom": newdatadict["comingfrom"][i],
+            "comingfrom": newdatadict["origin"][i],
             "destination": newdatadict["destination"][i]},
              ignore_index=True
         )
@@ -100,7 +100,7 @@ for i in newdatadict["name"]:
             "name": newdatadict["name"][i],
             "date": newdatadict["date"][i],
             "post": newdatadict["post"][i],
-            "comingfrom": newdatadict["comingfrom"][i],
+            "comingfrom": newdatadict["origin"][i],
             "destination": newdatadict["destination"][i]},
              ignore_index=True)
             print("Ship updated",  file=open('dunkerqueportreport.txt', 'a'))
